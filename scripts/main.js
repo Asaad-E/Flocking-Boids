@@ -4,46 +4,17 @@
 
 const canvasContainer = document.querySelector(".canvas-container");
 
-// Parameters
-
-const params = {
-  numBoids: 200, // Number of boids in the flock
-  boidsRadius: 10, // Radius of the boids
-  maxSpeed: 300, // Maximum speed of the boids (px/seg)
-  maxForce: 12, // Maximum steering force
-  maxForceMouse: 13, // Maximum steering force for mouse avoidance
-  perceptionRadius: 120, // Radius for boid perception,
-  perceptionRadiusSq: 60 ** 2, // Square of the perception radius
-  alignmentWeight: 1.2, // Weight for alignment behavior
-  cohesionWeight: 1.2, // Weight for cohesion behavior
-  separationWeight: 1.2, // Weight for separation behavior
-  mouseWeight: 1, // Weight for mouse avoidance/atraction
-  canvasWidth: 720, // Width of the canvas
-  canvasHeight: 600, // Height of the canvas
-};
-
-const debug = {
-  showOne: false,
-  pause: false,
-};
-
 // Variables
 
-let backgroundColor = "#515050";
-let boidsColor = "#AA0000";
 let boids = [];
 
-let targetFps = 60;
-let labelFps = targetFps;
-
-let custom = false;
-let optimized = false;
+let labelFps = params.targetFps;
 
 function setup() {
   // Create canvas
   const canvas = createCanvas(params.canvasWidth, params.canvasHeight);
   canvas.parent(canvasContainer);
-  frameRate(60);
+  frameRate(params.targetFps);
 
   // Create boids
   for (let i = 0; i < params.numBoids; i++) {
@@ -51,180 +22,90 @@ function setup() {
   }
 }
 
+let delta = 0;
+let now = new Date().getTime();
 function draw() {
-  background(backgroundColor);
+  // Calculate delta time
+
+  delta = new Date().getTime() - now;
+  now = new Date().getTime();
+
+  background(params.backgroundColor);
 
   // Draw boids
-  fill(boidsColor);
+  fill(params.boidsColor);
   noStroke();
-  boids.forEach((boid) => {
+
+  for (let index = 0; index < boids.length; index++) {
+    const boid = boids[index];
+
     if (debug.pause === false) {
       boid.flock(boids);
-      // avoid mouse
       boid.avoid(createVector(mouseX, mouseY));
-      boid.update(deltaTime / 1000);
+      boid.update(delta / 1000);
       boid.edge();
     }
 
     boid.draw();
-  });
+  }
 
+  // Show one boid for debugging
   if (debug.showOne && boids[0]) {
     noFill();
     stroke(0);
     circle(boids[0].pos.x, boids[0].pos.y, params.perceptionRadius * 2);
-    fill(24, 234, 234);
+    fill(params.showOneColor);
     noStroke();
     boids[0].draw();
   }
 
-  // if (Math.abs(frameRate() - targetFps) <= 2 && optimized === false) {
-  //   boids.push(new Boid(random(width), random(height)));
-  // } else if (custom === false) {
-  //   optimized = true;
-  //   custom = true;
-
-  //   console.log(deltaTime / 1000);
-  //   boids.pop();
-  //   console.log("Optimized");
-  //   console.log(boids.length);
-
-  //   setTimeout(() => {
-  //     optimized = false;
-  //     custom = false;
-  //   }, 5000);
-  // }
-
-  // FrameRate
+  // Show FrameRate on canvas
   if (frameCount % 5 === 0) {
-    labelFps = Math.round(1 / (deltaTime / 1000));
+    labelFps = Math.round(1 / (delta / 1000));
   }
   fill(0);
   textSize(20);
   text(`FPS: ${labelFps}`, 5, 25);
 }
 
-// Boid class
+// dinamicBoidsNumber
 
-class Boid {
-  constructor(x, y) {
-    this.pos = createVector(x, y);
-    this.vel = p5.Vector.random2D();
-    this.vel.setMag(random(params.maxSpeed * 0.2, params.maxSpeed * 0.5));
-    this.acc = createVector(0, 0);
+const frameUpperThreshold = 10;
+const frameLowerThreshold = 6;
+
+let isEnable = false;
+let frame = 0;
+let count = 0;
+
+let tolerance = 1.02;
+let intervalTime = 1000 / 6;
+
+function dinamicBoidsNumber() {
+  if (debug.dinamicBoidsNumber === false || debug.pause === true) return;
+
+  if (delta <= params.targetDelta * tolerance && count < frameUpperThreshold) {
+    count++;
+  } else if (
+    delta > params.targetDelta * tolerance &&
+    count > -frameUpperThreshold
+  ) {
+    count--;
   }
 
-  flock(others) {
-    let separation = createVector();
-    let alignment = createVector();
-    let cohesion = createVector();
-
-    let total = 0;
-
-    // check separation, alignment or cohesion
-    for (const other of others) {
-      if (other === this) continue;
-
-      let dist = this.pos.dist(other.pos);
-      // let distSqueared = p5.Vector.sub(this.pos, other.pos).magSq();
-
-      if (dist <= params.perceptionRadius) {
-        // separation
-        let diff = p5.Vector.sub(this.pos, other.pos);
-        diff.mult(1 / dist ** 2);
-        separation.add(diff);
-
-        // Alignment
-        alignment.add(other.vel);
-
-        // Cohesion
-        cohesion.add(other.pos);
-
-        total++;
-      }
-    }
-
-    // calculate streer force
-
-    if (total > 0) {
-      // Separation
-      separation.div(total);
-      separation.setMag(params.maxSpeed);
-      separation.sub(this.vel);
-      separation.limit(params.maxForce);
-      separation.mult(params.separationWeight);
-
-      // Alignment
-      alignment.div(total);
-      alignment.setMag(params.maxSpeed);
-      alignment.sub(this.vel);
-      alignment.limit(params.maxForce);
-      alignment.mult(params.alignmentWeight);
-
-      // Cohesion
-      cohesion.div(total);
-      cohesion.sub(this.pos);
-      cohesion.setMag(params.maxSpeed);
-      cohesion.sub(this.vel);
-      cohesion.limit(params.maxForce);
-      cohesion.mult(params.cohesionWeight);
-
-      // add forces
-      this.acc.add(separation);
-      this.acc.add(alignment);
-      this.acc.add(cohesion);
-    }
+  if (Math.abs(count) === frameUpperThreshold) {
+    isEnable = true;
+  } else if (Math.abs(count) <= frameLowerThreshold) {
+    isEnable = false;
   }
 
-  avoid(target) {
-    let diff = p5.Vector.sub(this.pos, target);
-    let dist = diff.mag();
-    if (dist < 200) {
-      diff.setMag(params.maxSpeed);
-      diff.sub(this.vel);
-      diff.limit(params.maxForceMouse * params.mouseWeight);
-      this.acc.add(diff);
+  if (isEnable) {
+    if (count > 0) {
+      numBoidsSlider.value = Number(numBoidsSlider.value) + 5;
+    } else {
+      numBoidsSlider.value = Number(numBoidsSlider.value) - 5;
     }
-  }
-
-  update(dt) {
-    this.vel.add(this.acc);
-    this.vel.limit(params.maxSpeed);
-    this.acc.mult(0);
-    this.pos.add(p5.Vector.mult(this.vel, dt));
-  }
-
-  edge() {
-    if (this.pos.x > width) {
-      this.pos.x = 0;
-    } else if (this.pos.x < 0) {
-      this.pos.x = width;
-    }
-
-    if (this.pos.y > height) {
-      this.pos.y = 0;
-    } else if (this.pos.y < 0) {
-      this.pos.y = height;
-    }
-  }
-
-  draw() {
-    push();
-
-    translate(this.pos.x, this.pos.y);
-    rotate(this.vel.heading());
-
-    triangle(
-      -params.boidsRadius,
-      -params.boidsRadius * 0.6,
-
-      params.boidsRadius,
-      0,
-
-      -params.boidsRadius,
-      params.boidsRadius * 0.6
-    );
-
-    pop();
+    updateNumBoids();
   }
 }
+
+let interval = setInterval(dinamicBoidsNumber, intervalTime);

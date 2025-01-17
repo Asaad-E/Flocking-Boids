@@ -9,6 +9,7 @@ const maxSpeedSlider = document.getElementById("maxSpeed");
 const mouseAtractionSlider = document.getElementById("mouseAttraction");
 
 const showOne = document.getElementById("showOne");
+const dinamicBoidsNumberCheck = document.getElementById("dinamicBoidsNumber");
 
 const playButton = document.getElementById("playButton");
 
@@ -61,7 +62,6 @@ function updateMouseAttraction() {
 
 function updateShowOne() {
   debug.showOne = showOne.checked;
-  console.log(showOne.checked);
 }
 
 function updatePlayButton() {
@@ -70,6 +70,17 @@ function updatePlayButton() {
     playButton.textContent = "Play";
   } else {
     playButton.textContent = "Pause";
+  }
+}
+
+function updateDinamicBoidsNumber() {
+  debug.dinamicBoidsNumber = dinamicBoidsNumberCheck.checked;
+
+  // clear inetvar if false to avoid boids number change
+  if (debug.dinamicBoidsNumber) {
+    interval = setInterval(dinamicBoidsNumber, intervalTime);
+  } else {
+    clearInterval(interval);
   }
 }
 
@@ -87,8 +98,21 @@ maxSpeedSlider.addEventListener("input", updateMaxSpeed);
 mouseAtractionSlider.addEventListener("input", updateMouseAttraction);
 
 showOne.addEventListener("change", updateShowOne);
+dinamicBoidsNumberCheck.addEventListener("change", updateDinamicBoidsNumber);
 
 playButton.addEventListener("click", updatePlayButton);
+
+// stop simulation when windwo is not active
+window.onblur = function () {
+  debug.pause = true;
+  playButton.textContent = "Play";
+};
+
+window.onfocus = function () {
+  debug.pause = false;
+  playButton.textContent = "Pause";
+};
+
 // initializations
 
 updateNumBoids();
@@ -99,3 +123,4 @@ updatePerceptionRadius();
 updateMaxSpeed();
 updateMouseAttraction();
 updateShowOne();
+updateDinamicBoidsNumber();

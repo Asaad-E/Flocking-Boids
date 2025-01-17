@@ -22,7 +22,8 @@ body {
 /* ------------------ Basic ------------------ */
 
 body {
-  width: 100dvw;
+  width: 100vw;
+  max-width: 100%;
   height: 100vh;
 
   background-color: var(--white);
@@ -35,6 +36,8 @@ body {
 
 canvas {
   display: block;
+
+  border-radius: 0.5rem;
 }
 
 /* ------------------ header ------------------ */
