@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Flocking Boids</title>
+
+    <link rel="stylesheet" type="text/css" href="style.css" />
+
+    <script src="libraries/p5.min.js"></script>
+    <script src="libraries/p5.sound.min.js"></script>
+  </head>
+
+  <body>
+    <header class="header">
+      <h1 class="header__title">Flocking Boids</h1>
+    </header>
+
+    <main class="main">
+      <section class="canvas-container"></section>
+
+      <section class="controls">
+        <h3 class="controls__title">Boids Parameters</h3>
+
+        <div class="controls__group">
+          <label for="numBoids" class="controls__label">Number of Boids</label>
+          <div class="control__slider-container">
+            <input
+              type="range"
+              id="numBoids"
+              class="controls__input"
+              min="0"
+              max="2000"
+              step="50"
+              value="200"
+            />
+            <output class="controls__output">200</output>
+          </div>
+        </div>
+        <div class="controls__group">
+          <label for="alignmentWeight" class="controls__label"
+            >Alignment Weight</label
+          >
+          <div class="control__slider-container">
+            <input
+              type="range"
+              id="alignmentWeight"
+              class="controls__input"
+              min="0"
+              max="2"
+              step="0.1"
+              value="1.2"
+            />
+            <output class="controls__output">1</output>
+          </div>
+        </div>
+        <div class="controls__group">
+          <label for="cohesionWeight" class="controls__label"
+            >Cohesion Weight</label
+          >
+          <div class="control__slider-container">
+            <input
+              type="range"
+              id="cohesionWeight"
+              class="controls__input"
+              min="0"
+              max="2"
+              step="0.1"
+              value="1.2"
+            />
+            <output class="controls__output">1</output>
+          </div>
+        </div>
+        <div class="controls__group">
+          <label for="separationWeight" class="controls__label"
+            >Separation Weight</label
+          >
+          <div class="control__slider-container">
+            <input
+              type="range"
+              id="separationWeight"
+              class="controls__input"
+              min="0"
+              max="2"
+              step="0.1"
+              value="1.2"
+            />
+            <output class="controls__output">1</output>
+          </div>
+        </div>
+        <div class="controls__group">
+          <label for="perceptionRadius" class="controls__label"
+            >Perception Radius</label
+          >
+          <div class="control__slider-container">
+            <input
+              type="range"
+              id="perceptionRadius"
+              class="controls__input"
+              min="10"
+              max="200"
+              step="5"
+              value="60"
+            />
+            <output class="controls__output">50</output>
+          </div>
+        </div>
+        <div class="controls__group">
+          <label for="maxSpeed" class="controls__label">Max Speed</label>
+          <div class="control__slider-container">
+            <input
+              type="range"
+              id="maxSpeed"
+              class="controls__input"
+              min="50"
+              max="600"
+              step="10"
+              value="300"
+            />
+            <output class="controls__output">300</output>
+          </div>
+        </div>
+
+        <div class="controls__group">
+          <label for="mouseAttraction" class="controls__label"
+            >Mouse Atraction(-)/repulsion(+)</label
+          >
+          <div class="control__slider-container">
+            <input
+              type="range"
+              id="mouseAttraction"
+              class="controls__input"
+              min="-1.5"
+              max="1.5"
+              step="0.1"
+              value="1"
+            />
+            <output class="controls__output">-1.5</output>
+          </div>
+        </div>
+
+        <hr />
+
+        <h3 class="controls__title">Optimization and Debug</h3>
+
+        <label class="controls__label" for="boundingBox">
+          <input type="checkbox" name="boundingBox" id="boundingBox" />
+          Bounding Box
+        </label>
+
+        <label class="controls__label" for="showBox">
+          <input type="checkbox" name="showBox" id="showBox" disabled />
+          Show Bounding Box
+        </label>
+
+        <label class="controls__label" for="showOne">
+          <input type="checkbox" name="showBox" id="showOne" checked />
+          Show one
+        </label>
+
+        <hr />
+
+        <!-- play button and show code(button to url to github) -->
+
+        <div class="controls__button-container">
+          <button class="controls__button" id="playButton">Pause</button>
+
+          <button class="controls__button controls__to-github">
+            <a href="http://" target="_blank" rel="noopener noreferrer"
+              >Source Code</a
+            >
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <script src="./scripts/main.js" defer></script>
+    <script src="./scripts/ui.js" defer></script>
+  </body>
+</html>
