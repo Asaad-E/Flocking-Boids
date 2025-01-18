@@ -22,6 +22,7 @@ With the sum of these three simple rules, the agents can exhibit complex flockin
 - **Spatial Partitioning:** Agents are organized into a grid to optimize neighbor search.
 - **Control Panel:** The user can adjust simulation parameters in real-time.
 - **Agent Visualization:** The user can toggle the display of agents' vision range and current cells neighbors.
+- **Mouse Atraction/Repulsion**: The user can attract/repel the boids to the mouse position.
 
 ## Installation
 
