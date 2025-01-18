@@ -23,6 +23,10 @@ function setup() {
   }
 }
 
+// spatial hash with and height
+let spatialHashWidth = 1;
+let spatialHashHeight = 1;
+// delta time
 let delta = 0;
 let now = new Date().getTime();
 function draw() {
@@ -30,14 +34,30 @@ function draw() {
   delta = new Date().getTime() - now;
   now = new Date().getTime();
 
-  // spatial hash
-
+  // spatial hash config
   if (debug.SpatialHash) {
     grid.reset();
+
     for (const boid of boids) {
       const [row, column] = grid.getCell(boid.pos);
       grid.cells[row][column].push(boid);
     }
+
+    spatialHashWidth = Math.max(
+      1,
+      Math.floor(
+        params.perceptionRadius /
+          (params.canvasWidth / params.horizontalDivisions)
+      )
+    );
+    spatialHashHeight = Math.max(
+      1,
+      Math.floor(
+        params.perceptionRadius /
+          (params.canvasHeight / params.verticalDivisions)
+      )
+    );
+    console.log(spatialHashHeight);
   }
   // background
   background(params.backgroundColor);
@@ -62,8 +82,8 @@ function draw() {
     // show neighbors grid for one boid
     const [row, column] = grid.getCell(boids[0].pos);
 
-    for (let i = -1; i <= 1; i++) {
-      for (let j = -1; j <= 1; j++) {
+    for (let i = -spatialHashWidth; i <= spatialHashWidth; i++) {
+      for (let j = -spatialHashHeight; j <= spatialHashHeight; j++) {
         let newRow = row + i;
         let newColumn = column + j;
 

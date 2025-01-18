@@ -33,13 +33,13 @@ class SpatialHash {
     return [row, column];
   }
 
-  getNeighbors(pos) {
+  getNeighbors(pos, spatialHashWidth = 1, spatialHashHeight = 1) {
     let [row, column] = this.getCell(pos);
 
     let neighbors = [];
 
-    for (let i = -1; i <= 1; i++) {
-      for (let j = -1; j <= 1; j++) {
+    for (let i = -spatialHashWidth; i <= spatialHashWidth; i++) {
+      for (let j = -spatialHashHeight; j <= spatialHashHeight; j++) {
         let newRow = row + i;
         let newColumn = column + j;
 
