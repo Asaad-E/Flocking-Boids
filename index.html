@@ -15,8 +15,8 @@
 
     <link rel="stylesheet" type="text/css" href="style.css" />
 
-    <script src="libraries/p5.min.js" defer></script>
-    <script src="libraries/p5.sound.min.js" defer></script>
+    <script src="libraries/p5.min.js"></script>
+    <script src="libraries/p5.sound.min.js"></script>
   </head>
 
   <body>
@@ -40,9 +40,9 @@
               min="0"
               max="2000"
               step="2"
-              value="20"
+              value="399"
             />
-            <output class="controls__output">200</output>
+            <output class="controls__output">1500</output>
           </div>
         </div>
         <div class="controls__group">
@@ -108,7 +108,7 @@
               min="10"
               max="200"
               step="5"
-              value="60"
+              value="35"
             />
             <output class="controls__output">50</output>
           </div>
@@ -152,13 +152,23 @@
         <h3 class="controls__title">Optimization and Debug</h3>
 
         <label class="controls__label" for="spatialHashing">
-          <input type="checkbox" name="spatialHashing" id="spatialHashing" />
+          <input
+            type="checkbox"
+            name="spatialHashing"
+            id="spatialHashing"
+            checked
+          />
           Spatial Hashing
         </label>
 
-        <label class="controls__label" for="showBox">
-          <input type="checkbox" name="showBox" id="showBox" disabled />
-          Show Bounding Box
+        <label class="controls__label" for="showSpatialHashing">
+          <input
+            type="checkbox"
+            name="showSpatialHashing"
+            id="showSpatialHashing"
+            checked
+          />
+          Show Spatial Hashing
         </label>
 
         <label class="controls__label" for="showOne">
@@ -194,9 +204,9 @@
       </section>
     </main>
 
-    <script src="./scripts/parameters.js"></script>
-    <script src="./scripts/boid.js"></script>
-    <script src="./scripts/spatialHashing.js"></script>
+    <script src="./scripts/parameters.js" defer></script>
+    <script src="./scripts/boid.js" defer></script>
+    <script src="./scripts/spatialHashing.js" defer></script>
     <script src="./scripts/main.js" defer></script>
 
     <script src="./scripts/ui.js" defer></script>

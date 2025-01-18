@@ -1,5 +1,9 @@
 class SpatialHash {
   constructor() {
+    this.reset();
+  }
+
+  reset() {
     this.cells = [];
 
     for (let row = 0; row < params.horizontalDivisions; row++) {
@@ -18,8 +22,13 @@ class SpatialHash {
       pos.y / (params.canvasHeight / params.verticalDivisions)
     );
 
-    row = row === 5 ? 4 : row;
-    column = column == 5 ? 4 : column;
+    row =
+      row === params.horizontalDivisions ? params.horizontalDivisions - 1 : row;
+
+    column =
+      column == params.verticalDivisions
+        ? params.verticalDivisions - 1
+        : column;
 
     return [row, column];
   }

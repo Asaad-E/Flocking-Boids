@@ -33,7 +33,7 @@ function draw() {
   // spatial hash
 
   if (debug.SpatialHash) {
-    grid = new SpatialHash();
+    grid.reset();
     for (const boid of boids) {
       const [row, column] = grid.getCell(boid.pos);
       grid.cells[row][column].push(boid);
@@ -41,6 +41,42 @@ function draw() {
   }
   // background
   background(params.backgroundColor);
+
+  //draw spatial hash
+  if (debug.showSpatialHash) {
+    for (let row = 0; row < params.horizontalDivisions; row++) {
+      for (let column = 0; column < params.verticalDivisions; column++) {
+        stroke(0);
+        noFill();
+        rect(
+          row * (params.canvasWidth / params.horizontalDivisions),
+          column * (params.canvasHeight / params.verticalDivisions),
+          params.canvasWidth / params.horizontalDivisions,
+          params.canvasHeight / params.verticalDivisions
+        );
+      }
+    }
+  }
+
+  if (debug.showSpatialHash && debug.showOne) {
+    // show neighbors grid for one boid
+    const [row, column] = grid.getCell(boids[0].pos);
+
+    for (let i = -1; i <= 1; i++) {
+      for (let j = -1; j <= 1; j++) {
+        let newRow = row + i;
+        let newColumn = column + j;
+
+        fill("#fca311");
+        rect(
+          newRow * (params.canvasWidth / params.horizontalDivisions),
+          newColumn * (params.canvasHeight / params.verticalDivisions),
+          params.canvasWidth / params.horizontalDivisions,
+          params.canvasHeight / params.verticalDivisions
+        );
+      }
+    }
+  }
 
   // Draw boids
   fill(params.boidsColor);
@@ -51,6 +87,7 @@ function draw() {
     if (debug.pause === false) {
       if (debug.SpatialHash) {
         const neighbors = grid.getNeighbors(boid.pos);
+
         boid.flock(neighbors);
       } else {
         boid.flock(boids);

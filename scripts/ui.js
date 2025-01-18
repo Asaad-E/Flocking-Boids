@@ -8,11 +8,14 @@ const perceptionRadiusSlider = document.getElementById("perceptionRadius");
 const maxSpeedSlider = document.getElementById("maxSpeed");
 const mouseAtractionSlider = document.getElementById("mouseAttraction");
 
-const SpatialHashCheck = document.getElementById("SpatialHash");
+const SpatialHashCheck = document.getElementById("spatialHashing");
+const showSpatialHashCheck = document.getElementById("showSpatialHashing");
 const showOne = document.getElementById("showOne");
 const dinamicBoidsNumberCheck = document.getElementById("dinamicBoidsNumber");
 
 const playButton = document.getElementById("playButton");
+
+let previusShowState = true;
 
 // functions
 
@@ -87,6 +90,21 @@ function updateDinamicBoidsNumber() {
 
 function updateSpatialHash() {
   debug.SpatialHash = SpatialHashCheck.checked;
+
+  if (debug.SpatialHash) {
+    showSpatialHashCheck.disabled = false;
+    showSpatialHashCheck.checked = previusShowState;
+  } else {
+    previusShowState = showSpatialHashCheck.checked;
+    showSpatialHashCheck.disabled = true;
+    showSpatialHashCheck.checked = false;
+  }
+
+  updateShowSpatialHash();
+}
+
+function updateShowSpatialHash() {
+  debug.showSpatialHash = showSpatialHashCheck.checked;
 }
 
 // evetns
@@ -103,6 +121,7 @@ maxSpeedSlider.addEventListener("input", updateMaxSpeed);
 mouseAtractionSlider.addEventListener("input", updateMouseAttraction);
 
 SpatialHashCheck.addEventListener("change", updateSpatialHash);
+showSpatialHashCheck.addEventListener("change", updateShowSpatialHash);
 showOne.addEventListener("change", updateShowOne);
 dinamicBoidsNumberCheck.addEventListener("change", updateDinamicBoidsNumber);
 
@@ -130,3 +149,5 @@ updateMaxSpeed();
 updateMouseAttraction();
 updateShowOne();
 updateDinamicBoidsNumber();
+updateSpatialHash();
+updateShowSpatialHash();
