@@ -132,7 +132,7 @@ function draw() {
   }
 
   // Show FrameRate on canvas
-  if (frameCount % 5 === 0) {
+  if (frameCount % 3 === 0) {
     labelFps = Math.round(1 / (delta / 1000));
   }
   fill(0);
