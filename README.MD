@@ -28,7 +28,7 @@ With the sum of these three simple rules, the agents can exhibit complex flockin
 
 ## Parameters
 
-In **Scripts/parameters.js** you can find the following parameters of the simulation:
+In **Scripts/parameters.js** you can find the following parameters of the simulation, which can be adjusted to change the behavior of the boids:
 
 ```javascript
 const params = {
