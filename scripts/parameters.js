@@ -4,12 +4,11 @@ const params = {
   numBoids: 1000, // Number of boids in the flock
 
   boidsRadius: 10, // Radius of the boids
-  perceptionRadius: 120, // Radius for boid perception,
-  perceptionRadiusSq: 60 ** 2, // Square of the perception radius
+  perceptionRadius: 120, // Radius for boid perception
 
   maxSpeed: 300, // Maximum speed of the boids (px/seg)
   maxForce: 12, // Maximum steering force
-  maxForceMouse: 13, // Maximum steering force for mouse avoidance
+  maxForceMouse: 13, // Maximum steering force for mouse avoidance/atraction
 
   alignmentWeight: 1.2, // Weight for alignment behavior
   cohesionWeight: 1.2, // Weight for cohesion behavior
