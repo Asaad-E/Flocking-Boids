@@ -46,5 +46,5 @@ This simulation was made using the [P5.js library](https://p5js.org/). Its an op
 ## References
 
 - Craig Reynolds for the [original Boids algorithm](https://www.red3d.com/cwr/boids/).
-- The nature of code - [Chapter 5: Autonomous](https://natureofcode.com/autonomous-agents/) By Daniel Shiffman.
+- The nature of code - [Chapter 5: Autonomous Agents](https://natureofcode.com/autonomous-agents/) By Daniel Shiffman.
 - [The code Train - challenge 124](https://thecodingtrain.com/challenges/124-flocking-simulation) for similar projects.
