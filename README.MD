@@ -1,6 +1,6 @@
 # Flocking Boids
 
-This project simulates the flocking behavior of boids (bird-like objects) using a set of rules. [Online Version](https://flocking-boids.netlify.app/)
+This project simulates the flocking behavior of boids (bird-like objects) using a set of rules. Test the online [online Version](https://flocking-boids.netlify.app/)
 
 <img src="https://github.com/Asaad-E/Flocking-Boids/blob/main/media/video.gif" width="400" height="400"/>
 
