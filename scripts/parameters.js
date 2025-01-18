@@ -19,6 +19,9 @@ const params = {
   canvasWidth: 600, // Width of the canvas
   canvasHeight: 600, // Height of the canvas
 
+  horizontalDivisions: 5, // Number of horizontal divisions
+  verticalDivisions: 5, // Number of vertical divisions
+
   backgroundColor: "#003049", // Background color of the canvas
   boidsColor: "#c1121f", // Color of the boids
   showOneColor: "#fdf0d5", // Color of the boid when showing only one
@@ -30,6 +33,8 @@ const params = {
 params.targetDelta = 1000 / params.targetFps;
 
 const debug = {
+  SpatialHash: true, // enable spatial hash
+  showSpatialHash: false, // show spatial hash
   showOne: false, // Show only one boid
   pause: false, // Pause the simulation
   dinamicBoidsNumber: false, // Enable dinamic boids number

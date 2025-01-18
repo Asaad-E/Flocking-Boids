@@ -7,8 +7,9 @@ const canvasContainer = document.querySelector(".canvas-container");
 // Variables
 
 let boids = [];
-
+let grid = new SpatialHash();
 let labelFps = params.targetFps;
+let interval;
 
 function setup() {
   // Create canvas
@@ -26,21 +27,35 @@ let delta = 0;
 let now = new Date().getTime();
 function draw() {
   // Calculate delta time
-
   delta = new Date().getTime() - now;
   now = new Date().getTime();
 
+  // spatial hash
+
+  if (debug.SpatialHash) {
+    grid = new SpatialHash();
+    for (const boid of boids) {
+      const [row, column] = grid.getCell(boid.pos);
+      grid.cells[row][column].push(boid);
+    }
+  }
+  // background
   background(params.backgroundColor);
 
   // Draw boids
   fill(params.boidsColor);
   noStroke();
-
   for (let index = 0; index < boids.length; index++) {
     const boid = boids[index];
 
     if (debug.pause === false) {
-      boid.flock(boids);
+      if (debug.SpatialHash) {
+        const neighbors = grid.getNeighbors(boid.pos);
+        boid.flock(neighbors);
+      } else {
+        boid.flock(boids);
+      }
+
       boid.avoid(createVector(mouseX, mouseY));
       boid.update(delta / 1000);
       boid.edge();
@@ -107,5 +122,3 @@ function dinamicBoidsNumber() {
     updateNumBoids();
   }
 }
-
-let interval = setInterval(dinamicBoidsNumber, intervalTime);

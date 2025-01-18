@@ -8,6 +8,7 @@ const perceptionRadiusSlider = document.getElementById("perceptionRadius");
 const maxSpeedSlider = document.getElementById("maxSpeed");
 const mouseAtractionSlider = document.getElementById("mouseAttraction");
 
+const SpatialHashCheck = document.getElementById("SpatialHash");
 const showOne = document.getElementById("showOne");
 const dinamicBoidsNumberCheck = document.getElementById("dinamicBoidsNumber");
 
@@ -84,6 +85,10 @@ function updateDinamicBoidsNumber() {
   }
 }
 
+function updateSpatialHash() {
+  debug.SpatialHash = SpatialHashCheck.checked;
+}
+
 // evetns
 
 numBoidsSlider.addEventListener("input", updateNumBoids);
@@ -97,6 +102,7 @@ maxSpeedSlider.addEventListener("input", updateMaxSpeed);
 
 mouseAtractionSlider.addEventListener("input", updateMouseAttraction);
 
+SpatialHashCheck.addEventListener("change", updateSpatialHash);
 showOne.addEventListener("change", updateShowOne);
 dinamicBoidsNumberCheck.addEventListener("change", updateDinamicBoidsNumber);
 

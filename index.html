@@ -40,7 +40,7 @@
               min="0"
               max="2000"
               step="2"
-              value="600"
+              value="20"
             />
             <output class="controls__output">200</output>
           </div>
@@ -151,9 +151,9 @@
 
         <h3 class="controls__title">Optimization and Debug</h3>
 
-        <label class="controls__label" for="boundingBox">
-          <input type="checkbox" name="boundingBox" id="boundingBox" />
-          Bounding Box
+        <label class="controls__label" for="spatialHashing">
+          <input type="checkbox" name="spatialHashing" id="spatialHashing" />
+          Spatial Hashing
         </label>
 
         <label class="controls__label" for="showBox">
@@ -196,9 +196,9 @@
 
     <script src="./scripts/parameters.js"></script>
     <script src="./scripts/boid.js"></script>
+    <script src="./scripts/spatialHashing.js"></script>
     <script src="./scripts/main.js" defer></script>
 
     <script src="./scripts/ui.js" defer></script>
-    <script src="./scripts/dinamicBoidsNumber.js"></script>
   </body>
 </html>
