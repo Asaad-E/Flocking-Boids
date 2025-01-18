@@ -4,7 +4,6 @@ This project simulates the flocking behavior of boids (bird-like objects) using 
 
 <img src="https://github.com/Asaad-E/Flocking-Boids/blob/main/media/video.gif" width="400" height="400"/>
 
-
 The simulation demonstrates how complex group behaviors can emerge from limited environmental awareness and simple rules.
 
 The strength of these three behaviors can be controlled with their respective sliders.
@@ -26,6 +25,41 @@ With the sum of these three simple rules, the agents can exhibit complex flockin
 - **Control Panel:** The user can adjust simulation parameters in real-time.
 - **Agent Visualization:** The user can toggle the display of agents' vision range and current cells neighbors.
 - **Mouse Atraction/Repulsion**: The user can attract/repel the boids to the mouse position.
+
+## Parameters
+
+In **Scripts/parameters.js** you can find the following parameters of the simulation:
+
+```javascript
+const params = {
+  numBoids: 1000, // Number of boids in the flock
+
+  boidsRadius: 10, // Radius of the boids
+  perceptionRadius: 120, // Radius for boid perception
+
+  maxSpeed: 300, // Maximum speed of the boids (px/seg)
+  maxForce: 12, // Maximum steering force
+  maxForceMouse: 13, // Maximum steering force for mouse avoidance/atraction
+
+  alignmentWeight: 1.2, // Weight for alignment behavior
+  cohesionWeight: 1.2, // Weight for cohesion behavior
+  separationWeight: 1.2, // Weight for separation behavior
+  mouseWeight: 1, // Weight for mouse avoidance/atraction
+
+  canvasWidth: 600, // Width of the canvas
+  canvasHeight: 600, // Height of the canvas
+
+  horizontalDivisions: 14, // Number of horizontal divisions
+  verticalDivisions: 14, // Number of vertical divisions
+
+  backgroundColor: "#003049", // Background color of the canvas
+  boidsColor: "#c1121f", // Color of the boids
+  showOneColor: "#fdf0d5", // Color of the boid when showing only one
+
+  targetFps: 60, // Target frame rate
+  targetDelta: 1000 / 60, // Target delta time (ms) (1000 / targetFps)
+};
+```
 
 ## Installation
 
