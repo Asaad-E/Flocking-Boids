@@ -2,6 +2,9 @@
 
 This project simulates the flocking behavior of boids (bird-like objects) using a set of rules.
 
+<img src="https://github.com/Asaad-E/Flocking-Boids/blob/main/media/video.gif" width="400" height="400"/>
+
+
 The simulation demonstrates how complex group behaviors can emerge from limited environmental awareness and simple rules.
 
 The strength of these three behaviors can be controlled with their respective sliders.
