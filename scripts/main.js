@@ -57,7 +57,6 @@ function draw() {
           (params.canvasHeight / params.verticalDivisions)
       )
     );
-    console.log(spatialHashHeight);
   }
   // background
   background(params.backgroundColor);
